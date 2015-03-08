@@ -1,7 +1,25 @@
-%h1 Editing category
+%ul{ :class => "nav nav-tabs" }
+
+  %li{ role: "presentation" }
+    = link_to 'Back', categories_path, class: 'btn btn-primary'
+
+  %li{ role: "presentation" }
+    = link_to 'Show', category
+
+  %li{ role: "presentation" }
+    = link_to 'Products', category_products_path(category)
+
+  - if can? :new, Product
+    %li{ role: "presentation" }
+      = link_to "New Product", new_category_product_path(category)
+
+  %li{ role: "presentation", class: "active" }
+    = link_to 'Edit', "#"
+    
+  - if can? :delete, category
+    %li{ role: "presentation" }
+      = link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
+
+%h3= category.name
 
 = render 'form'
-
-= link_to 'Show', category
-\|
-= link_to 'Back', categories_path, class: 'btn btn-primary'

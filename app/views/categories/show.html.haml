@@ -1,4 +1,27 @@
-%p#notice= notice
+%ul{ :class => "nav nav-tabs" }
+
+  %li{ role: "presentation" }
+    = link_to 'Back', categories_path, class: 'btn btn-primary'
+
+  %li{ role: "presentation", class: "active" }
+    = link_to 'Show', "#"
+
+  %li{ role: "presentation" }
+    = link_to 'Products', category_products_path(category)
+
+  - if can? :new, Product
+    %li{ role: "presentation" }
+      = link_to "New Product", new_category_product_path(category)
+
+  - if can? :edit, category
+    %li{ role: "presentation" }
+      = link_to 'Edit', edit_category_path(category)
+      
+  - if can? :delete, category
+    %li{ role: "presentation" }
+      = link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
+
+%h3= category.name
 
 %p
   %b Name:
@@ -7,11 +30,3 @@
 %p
   - category.products.each do |product|
     = product.title
-
-%p
-  %h3 New product
-  = render 'products/form'
-
-= link_to 'Edit', edit_category_path(category)
-\|
-= link_to 'Back', categories_path, class: 'btn btn-primary'

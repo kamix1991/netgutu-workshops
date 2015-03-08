@@ -1,25 +1,28 @@
 class ReviewsController < ApplicationController
-
-  expose(:review)
-  expose(:product)
+  load_and_authorize_resource
+  
+  expose_decorated(:review)
+  expose_decorated(:reviews)
+  expose_decorated(:product)
+  expose_decorated(:category)
 
   def edit
   end
 
   def create
     self.review = Review.new(review_params)
-
+    review.user = current_user
     if review.save
       product.reviews << review
-      redirect_to category_product_url(product.category, product), notice: 'Review was successfully created.'
+      redirect_to category_product_path(product.category, product), notice: 'Review was successfully created.'
     else
-      render action: 'new'
+      render 'products/show'
     end
   end
 
   def destroy
     review.destroy
-    redirect_to category_product_url(product.category, product), notice: 'Review was successfully destroyed.'
+    redirect_to category_product_path(product.category, product), notice: 'Review was successfully destroyed.'
   end
 
   private

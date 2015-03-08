@@ -1,0 +1,29 @@
+%ul{ :class => "nav nav-tabs" }
+
+  %li{ role: "presentation" }
+    = link_to 'Listing Categories', categories_path
+
+  - if can? :create, Category
+    %li{ role: "presentation" }
+      = link_to "New Category", new_category_path
+
+  %li{ role: "presentation", class: "active" }
+    = link_to "Listing Users", "#"
+
+%h3 Listing users
+
+%table.table
+  %tr
+    %th First name
+    %th Last name
+    %th Email
+    %th
+
+  - users.each do |user|
+    - if can? :show, user
+      %tr
+        %td= user.firstname
+        %td= user.lastname
+        %td= user.email
+        %td
+          = link_to 'Show', user_path(user), class: "btn btn-info btn-xs"

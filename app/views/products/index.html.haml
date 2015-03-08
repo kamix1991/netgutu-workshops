@@ -1,21 +1,42 @@
-%h1 Listing products
+%ul{ :class => "nav nav-tabs" }
 
-%table
+  %li{ role: "presentation" }
+    = link_to 'Back', categories_path, class: 'btn btn-primary'
+
+  %li{ role: "presentation" }
+    = link_to 'Show', category
+
+  %li{ role: "presentation", class: "active" }
+    = link_to 'Products', "#"
+
+  - if can? :new, Product
+    %li{ role: "presentation" }
+      = link_to "New Product", new_category_product_path(category)
+
+  - if can? :edit, category
+    %li{ role: "presentation" }
+      = link_to 'Edit', edit_category_path(category)
+      
+  - if can? :delete, category
+    %li{ role: "presentation" }
+      = link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
+
+%h3= category.name
+
+%table.table
   %tr
     %th Title
-    %th Description
     %th Price
     %th
-    %th
-    %th
 
-  - products.each do |product|
+
+  - @products.each do |product|
     %tr
       %td= product.title
-      %td= product.description
       %td= product.price
-      %td= link_to 'Show', category_product_path(product.category, product)
-      %td= link_to 'Edit', edit_category_product_path(product.category, product)
-      %td= link_to 'Destroy', category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
+      %td
+        = link_to 'Show', category_product_path(product.category, product), class: "btn btn-info btn-xs"
+        - if can? :edit, product
+          = link_to 'Edit', edit_category_product_path(product.category, product), class: "btn btn-warning btn-xs"
+        - if can? :delete, product
+          = link_to 'Destroy', category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs"

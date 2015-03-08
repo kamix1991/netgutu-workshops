@@ -1,0 +1,34 @@
+%ul{ :class => "nav nav-tabs" }
+
+  %li{ role: "presentation" }
+    = link_to 'Back', users_path, class: 'btn btn-primary'
+
+  %li{ role: "presentation" }
+    = link_to "Show", user_path(user)
+
+  %li{ role: "presentation" }
+    = link_to 'Products', products_user_path(user)
+
+  %li{ role: "presentation", class: "active" }
+    = link_to 'Last Reviews', "#"
+
+%h3= user.fullname
+
+%p
+  %b Last Reviews
+
+%table.table
+  %tr
+    %th Date
+    %th Category
+    %th Product
+    %th Content
+    %th Rating
+
+  - reviews.last(5).each do |review|
+    %tr
+      %td= review.created_at
+      %td= review.product.category.name
+      %td= review.product.title
+      %td= review.content
+      %td= review.rating

@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe ProductsController do
-  let(:category)      { create(:category) }
+  let(:category) { create(:category) }
   let(:valid_attributes) do
     {
       title: 'MyString',
@@ -15,7 +15,6 @@ describe ProductsController do
     describe 'POST create' do
       describe 'with valid params' do
         it 'redirects user to login page' do
-          binding.pry
           post :create, { product: valid_attributes, category_id: category.to_param }
           expect(response).to redirect_to(new_user_session_path)
         end
@@ -44,27 +43,28 @@ describe ProductsController do
       controller.stub(:current_user).and_return(user2)
       controller.stub(:authenticate_user!).and_return(user2)
       product.user = user
+      product.save!
     end
 
     describe 'GET edit' do
       describe 'with valid params' do
         it 'redirects to product page' do
           get :edit, { id: product.to_param, category_id: category.to_param }
-          expect(response).to redirect_to(category_product_url(category, product))
+          expect(response).to redirect_to(root_path)
         end
 
         it 'renders error message' do
           get :edit, { id: product.to_param, category_id: category.to_param }
-          expect(controller.flash[:error]).to eq 'You are not allowed to edit this product.'
+          expect(controller.flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
     end
 
     describe 'PUT update' do
       describe 'with valid params' do
-        it 'redirects to product page' do
+        it 'redirects to root' do
           put :update, { id: product.to_param, product: { 'title' => 'MyString' }, category_id: category.to_param }
-          expect(response).to redirect_to(category_product_url(category, product))
+          expect(response).to redirect_to(root_path)
         end
 
         it 'does not update product' do
@@ -74,7 +74,7 @@ describe ProductsController do
 
         it 'renders error message' do
           put :update, { id: product.to_param, product: { 'title' => 'MyString' }, category_id: category.to_param }
-          expect(controller.flash[:error]).to eq 'You are not allowed to edit this product.'
+          expect(controller.flash[:alert]).to eq 'You are not authorized to access this page.'
         end
       end
     end
@@ -172,6 +172,7 @@ describe ProductsController do
         controller.stub(:current_user).and_return(user)
         controller.stub(:authenticate_user!).and_return(user)
         product.user = user
+        product.save!
       end
 
       describe 'with valid params' do
@@ -202,7 +203,7 @@ describe ProductsController do
         it "re-renders the 'edit' template" do
           Product.any_instance.stub(:save).and_return(false)
           put :update, { id: product.to_param, product: { 'title' => 'invalid value' }, category_id: category.to_param }
-          expect(response).to redirect_to(category_product_url(category, product))
+          expect(response).to render_template('edit')
         end
       end
     end

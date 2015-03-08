@@ -1,6 +1,7 @@
 !!!
 %html{ lang: 'en' }
   %head
+    %title Netguru Rzeszów Workshops 2015
     %meta{ charset: 'utf-8' }/
     %meta{ content: 'IE=Edge,chrome=1', 'http-equiv' => 'X-UA-Compatible' }/
     %meta{ content: 'width=device-width, initial-scale=1.0', name: 'viewport' }/
@@ -14,8 +15,12 @@
         .navbar-header
           %span.navbar-brand #{AppConfig.workshops_name}
         %p.navbar-text.navbar-right
-          Links should go here
+          = render :file => "#{Rails.root}/app/views/devise/shared/_links.haml"
     .container-fluid
-      .row
-        .col-lg-12
-          = yield
+      .starter-template
+        .row
+          .col-lg-2
+          .col-lg-8
+            = render :file => "#{Rails.root}/app/views/layouts/_flash.haml"
+            = yield
+          .col-lg-2

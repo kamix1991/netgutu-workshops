@@ -1,7 +1,18 @@
-%h1 Editing product
+%ul{ :class => "nav nav-tabs" }
+
+  %li{ role: "presentation" }
+    = link_to 'Back', category_products_path(category), class: 'btn btn-primary'
+
+  %li{ role: "presentation" }
+    = link_to 'Show', category_product_path(product.category, product)
+
+  %li{ role: "presentation", class: "active" }
+    = link_to 'Edit', "#"
+
+  - if can? :delete, product
+    %li{ role: "presentation" }
+      = link_to 'Destroy', category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' }
+
+%h3= product.title
 
 = render 'form'
-
-= link_to 'Show', category_product_path(category, product)
-\|
-= link_to 'Back', category_path(category)

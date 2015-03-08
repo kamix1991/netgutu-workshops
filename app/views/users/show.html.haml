@@ -1,0 +1,38 @@
+%ul{ :class => "nav nav-tabs" }
+
+  %li{ role: "presentation" }
+    = link_to 'Back', users_path, class: 'btn btn-primary'
+
+  %li{ role: "presentation", class: "active" }
+    = link_to "Show", "#"
+
+  %li{ role: "presentation" }
+    = link_to 'Products', products_user_path(user)
+
+  %li{ role: "presentation" }
+    = link_to 'Last Reviews', reviews_user_path(user)
+
+%h3= user.fullname
+
+%p
+  %b First name:
+  = user.firstname
+
+%p
+  %b Last name:
+  = user.lastname
+
+%p
+  %b Email:
+  = user.email
+%p
+  %b Created at:
+  = user.created_at
+
+%p
+  %b Sign in count:
+  = user.sign_in_count
+
+%p
+  %b Last sign in at:
+  = user.last_sign_in_at

@@ -1,4 +1,6 @@
-%p= review.content
-%p
-  %b= review.rating
-  %em= review.author
+.li{ :class=> "list-group-item" }
+  %span(class="badge")
+    %b= review.rating
+  %p= review.content
+  %p
+    %em= review.author

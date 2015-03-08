@@ -1,19 +1,29 @@
-%h1 Listing categories
+%ul{ :class => "nav nav-tabs" }
+
+  %li{ role: "presentation", class: "active" }
+    = link_to "Listing Categories", "#"
+
+  - if can? :create, Category
+    %li{ role: "presentation" }
+      = link_to "New Category", new_category_path
+
+  %li{ role: "presentation" }
+    = link_to "Listing Users", users_path
+
+%h3 Listing categories
 
 %table.table
   %tr
     %th Name
     %th
-    %th
-    %th
 
   - categories.each do |category|
-    %tr
-      %td= category.name
-      %td= link_to 'Show', category
-      %td= link_to 'Edit', edit_category_path(category)
-      %td= link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Category', new_category_path
+    - if can? :show, category
+      %tr
+        %td= category.name
+        %td
+          = link_to 'Show', category, class: "btn btn-info btn-xs"
+          - if can? :edit, Category
+            = link_to 'Edit', edit_category_path(category), class: "btn btn-warning btn-xs"
+          - if can? :destroy, Category
+            = link_to 'Destroy', category, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-danger btn-xs"

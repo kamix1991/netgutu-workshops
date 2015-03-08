@@ -1,6 +1,27 @@
-%p#notice= notice
-%p#error= flash[:error]
+%ul{ :class => "nav nav-tabs" }
 
+  %li{ role: "presentation" }
+    = link_to 'Back', category_products_path(category), class: 'btn btn-primary'
+
+  %li{ role: "presentation", class: "active" }
+    = link_to 'Show', "#"
+
+  - if can? :edit, product
+    %li{ role: "presentation" }
+      = link_to 'Edit', edit_category_product_path(product.category, product)
+
+  - if can? :delete, product
+    %li{ role: "presentation" }
+      = link_to 'Destroy', category_product_path(product.category, product), method: :delete, data: { confirm: 'Are you sure?' }
+
+%h3= product.title
+
+%p
+  %b Owner:
+  = product.user.fullname
+%p
+  %b Category
+  = product.category.name
 %p
   %b Title:
   = product.title
@@ -8,18 +29,15 @@
   %b Description:
   = product.description
 %p
+  %b Average rating:
+  = product.average_rating
+%p
   %b Price:
   = product.price
 
-%p
-  %b Category
-  = product.category.name
-
 %h3 Reviews
-= render 'reviews/form'
-
-= render reviews
-
-= link_to 'Edit', edit_category_product_path(category.id, product.id)
-\|
-= link_to 'Back', category_products_path, class: 'btn btn-primary'
+- if can? :create, Review
+  = render 'reviews/form', locals: { product: product, category: product.category }
+%p
+.ul{ :class=> "list-group" }
+  = render reviews

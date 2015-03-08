@@ -1,11 +1,14 @@
 class ProductsController < ApplicationController
+  load_and_authorize_resource
+
   expose(:category)
   expose(:products)
   expose(:product)
-  expose(:review) { Review.new }
+  expose_decorated(:review) { Review.new }
   expose_decorated(:reviews, ancestor: :product)
 
   def index
+    @products = category.products
   end
 
   def show
@@ -18,8 +21,9 @@ class ProductsController < ApplicationController
   end
 
   def create
+    authenticate_user!
     self.product = Product.new(product_params)
-
+    product.user_id = current_user.id
     if product.save
       category.products << product
       redirect_to category_product_url(category, product), notice: 'Product was successfully created.'
@@ -36,7 +40,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  # DELETE /products/1
   def destroy
     product.destroy
     redirect_to category_url(product.category), notice: 'Product was successfully destroyed.'

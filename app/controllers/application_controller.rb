@@ -1,8 +1,15 @@
 class ApplicationController < ActionController::Base
-	before_action :authenticate_user!
-
+  
   decent_configuration do
     strategy DecentExposure::StrongParametersStrategy
+  end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    if user_signed_in?
+      redirect_to root_path, alert: exception.message
+    else
+      redirect_to new_user_session_path, :notice => flash[:alert] || "You must login first"
+    end
   end
 
   protect_from_forgery with: :exception

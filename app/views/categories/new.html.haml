@@ -1,5 +1,14 @@
-%h1 New category
+%ul{ :class => "nav nav-tabs" }
+
+  %li{ role: "presentation" }
+    = link_to 'Listing Categories', categories_path
+
+  %li{ role: "presentation", class: "active" }
+    = link_to "New Category", "#"
+
+  %li{ role: "presentation" }
+    = link_to "Listing Users", users_path
+
+%h3 New category
 
 = render 'form'
-
-= link_to 'Back', categories_path, class: 'btn btn-primary'
