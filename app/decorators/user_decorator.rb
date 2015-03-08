@@ -9,7 +9,7 @@ class UserDecorator < Draper::Decorator
 
   def last_sign_in_at
     helpers.content_tag :span, class: 'time' do
-      object.last_sign_in_at.strftime('%d-%m-%y')
+      object.last_sign_in_at ? object.last_sign_in_at.strftime('%d-%m-%y') : "-"
     end
   end
 

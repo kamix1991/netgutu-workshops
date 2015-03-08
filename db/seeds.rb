@@ -1,7 +1,21 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+admin = User.create( firstname: Faker::Name.first_name, lastname: Faker::Name.last_name, email: 'admin@admin.com', password: 'password', admin: true)
+user1 = User.create( firstname: Faker::Name.first_name, lastname: Faker::Name.last_name, email: 'user@user.com', password: 'password' )
+user2 = User.create( firstname: Faker::Name.first_name, lastname: Faker::Name.last_name, email: Faker::Internet.email, password: Faker::Lorem.characters(8) )
+user3 = User.create( firstname: Faker::Name.first_name, lastname: Faker::Name.last_name, email: Faker::Internet.email, password: Faker::Lorem.characters(8) )
+user4 = User.create( firstname: Faker::Name.first_name, lastname: Faker::Name.last_name, email: Faker::Internet.email, password: Faker::Lorem.characters(8) )
+user5 = User.create( firstname: Faker::Name.first_name, lastname: Faker::Name.last_name, email: Faker::Internet.email, password: Faker::Lorem.characters(8) )
+
+category = Category.create( name: Faker::Lorem.word )
+
+product1 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 1.23, category_id: category.id, user_id: user1.id )
+product2 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 4.56, category_id: category.id, user_id: user2.id )
+product3 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 7.89, category_id: category.id, user_id: user3.id )
+product4 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 10.11, category_id: category.id, user_id: user4.id )
+product5 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 12.13, category_id: category.id, user_id: user5.id )
+product = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 14.15, category_id: category.id, user_id: user.id )
+
+review1 = Review.create( content: Faker::Lorem.sentence, rating: 1, product_id: product1.id, user_id: user5.id )
+review2 = Review.create( content: Faker::Lorem.sentence, rating: 2, product_id: product2.id, user_id: user4.id )
+review3 = Review.create( content: Faker::Lorem.sentence, rating: 3, product_id: product3.id, user_id: user3.id )
+review4 = Review.create( content: Faker::Lorem.sentence, rating: 4, product_id: product4.id, user_id: user2.id )
+review5 = Review.create( content: Faker::Lorem.sentence, rating: 5, product_id: product5.id, user_id: user1.id )

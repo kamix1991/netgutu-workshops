@@ -28,5 +28,6 @@
   = category.name
 
 %p
-  - category.products.each do |product|
-    = product.title
+  %b Last Products:
+  - category.products.last(5).each do |product|
+    = "#{product.title}, "
