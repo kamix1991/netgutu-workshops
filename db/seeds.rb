@@ -12,7 +12,6 @@ product2 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.s
 product3 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 7.89, category_id: category.id, user_id: user3.id )
 product4 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 10.11, category_id: category.id, user_id: user4.id )
 product5 = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 12.13, category_id: category.id, user_id: user5.id )
-product = Product.create( title: Faker::Lorem.word, description: Faker::Lorem.sentence, price: 14.15, category_id: category.id, user_id: user.id )
 
 review1 = Review.create( content: Faker::Lorem.sentence, rating: 1, product_id: product1.id, user_id: user5.id )
 review2 = Review.create( content: Faker::Lorem.sentence, rating: 2, product_id: product2.id, user_id: user4.id )
