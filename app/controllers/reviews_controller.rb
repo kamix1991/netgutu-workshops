@@ -2,7 +2,7 @@ class ReviewsController < ApplicationController
   load_and_authorize_resource
   
   expose_decorated(:review)
-  expose_decorated(:reviews)
+  expose_decorated(:reviews, ancestor: :product)
   expose_decorated(:product)
   expose_decorated(:category)
 
